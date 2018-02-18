@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  adpterapi:
+    image: venkateshsrini3/adpterapi
+    build:
+      context: .
+      dockerfile: src/AdpterApi/Dockerfile
+    ports:
+      - 55773:80

@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  adpterapi:
+    image: venkateshsrini3/adpterapi
+    build:
+      context: .
+    ports:
+      - 80:80
+    labels:
+      kompose.service.type: LoadBalancer
