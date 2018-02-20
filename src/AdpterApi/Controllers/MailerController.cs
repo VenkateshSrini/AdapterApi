@@ -37,10 +37,24 @@ namespace AdpterApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]AppDetails appDetails)
         {
+            if (appDetails.ToAddress==null)
+                return BadRequest(new APIResponse{
+                CorelationID = _corelationGuid.ToString(),
+                    Status = "To Address is empty",
+                    StatusCode = HttpStatusCode.OK
+                });
+            if (appDetails.ToAddress.Count ==0)
+                return BadRequest(new APIResponse
+                {
+                    CorelationID = _corelationGuid.ToString(),
+                    Status = "To Address is empty",
+                    StatusCode = HttpStatusCode.OK
+                });
+
             OutgoingMailModel mailModel = new OutgoingMailModel
             {
                 FromAddress = _mailerSettings.FromAddress,
-                ToAddress = new List<string>(_mailerSettings.ToAddress.Split(';')),
+                ToAddress = appDetails.ToAddress,
                 Subject = $"{appDetails.AlertType} in application {appDetails.AppName} with app id {appDetails.AppID}",
                 Body = appDetails.Message
 
